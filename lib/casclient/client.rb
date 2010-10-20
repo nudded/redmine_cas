@@ -214,6 +214,9 @@ module CASClient
         raw_res = https.start do |conn|
           conn.get("#{uri.path}?#{uri.query}")
         end
+        while Net::HTTPRedirection === raw_res
+          raw_res = Net::HTTP.get_response(URI.parse(raw_res['location']))
+        end
       rescue Errno::ECONNREFUSED => e
         log.error "CAS server did not respond! (#{e.inspect})"
         raise "The CAS authentication server at #{uri} is not responding!"
