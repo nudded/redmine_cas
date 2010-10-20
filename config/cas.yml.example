@@ -1,0 +1,10 @@
+development:
+  enabled: true
+  url: http://tomcat-apps.emergya.info/cas/
+
+test:
+  enabled: false
+
+production:
+  enabled: true
+  url: http://tomcat-apps.emergya.info/cas/
