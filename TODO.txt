@@ -1,0 +1,2 @@
+ * After changes be accepted at upstream remove the modified rubycas-client's
+ code.
