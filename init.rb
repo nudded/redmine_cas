@@ -5,8 +5,8 @@ Dir["#{File.dirname(__FILE__)}/config/initializers/**/*.rb"].sort.each do |initi
 end
 
 require 'redmine'
-require 'cas_account_controller_patch'
-require 'cas_application_controller_patch'
+require 'cas/account_controller_patch'
+require 'cas/application_controller_patch'
 
 Redmine::Plugin.register :redmine_cas do
   name 'CAS Web Authentication'
