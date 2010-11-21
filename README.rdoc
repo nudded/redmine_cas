@@ -1,39 +1,48 @@
 == CAS Plugin
 
-Redmine plugin to support for JA-SIG's Central Authentication Service (CAS) protocol.
-This plugin give you a solid and secure single sign on solution for web-based
-applications.
+Redmine plugin to support authentication via Central Authentication Service (CAS).
+This plugin gives you a solid and secure single sign on solution for web-based
+applications. This plugin redirects the user to the CAS login interface when needed
+and then checks the validity of the CAS ticket.
 
-The plugin use the rubycas-client to wirk with the CAS protocol. The code of the
-rubycas-client is included here because some bugs have been fixed but they are not
-yet applied on the upstream project.
+The plugin uses the rubycas-client library to work with the CAS protocol. The code of the
+rubycas-client is included here because it has been patched to add some features which are not
+yet available in the upstream project (follow redirects in request to the CAS server and use
+the service parameter instead of destination on logout).
 
 == Features
 
  * To have a few web-based apps using a unique point of authentication.
- You login in one of then, you are logged in already in all of them.
+ You login in one of them, you are logged in already in all of them.
 
 == Getting the plugin
 
-A copy of the plugin can be found in the {downloads}[http://forja.cenatic.es/] at
-Cenatic Forge and also on {Gitorious}[http://gitorious.org/redmine_cas/redmine_cas/].
+A copy of the plugin can be found in the {downloads}[http://forja.cenatic.es] at
+Cenatic Forge and also on {Gitorious}[http://gitorious.org/redmine_cas/redmine_cas].
 
 == Install
 
 1. Follow the Redmine plugin installation steps at: http://www.redmine.org/wiki/redmine/Plugins
+2. Create a configuration file (config/cas.yml). See the +Configuration+ section.
 3. Restart your Redmine web servers (e.g. mongrel, thin, mod_rails)
-4. Login to your Redmine install as an Administrator
 
-== Usage
+== Configuration
+
+The configuration file is named config/cas.yml. It has different sections for each server
+environment. Under each environment there are only two configuration values:
+
+* enabled: is authentication against CAS enabled for this environment? true/false default: false.
+* url: root url of the CAS server.
 
 == License
 
 This plugin is licensed under the GNU GPL v2.  See LICENSE.txt for details.
+Note: the included code from the rubycas-client library is licensed under the LGPL v2.1.
 
 == Project help
 
-If you need help you can contact the maintainer on the bug tracker at http://forja.cenatic.es/
+If you need help you can contact the maintainer on the bug tracker at http://forja.cenatic.es
 
 == References
 
-rubycas-client: http://code.google.com/p/rubycas-client/
+rubycas-client: http://code.google.com/p/rubycas-client
