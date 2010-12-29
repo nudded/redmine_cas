@@ -1,7 +1,6 @@
 require 'casclient'
 require 'casclient/frameworks/rails/filter'
 require 'dispatcher'
-require_dependency 'account_controller'
 
 # Patches Redmine's AccountController dinamically. Manages login and logout
 # through CAS.
@@ -52,5 +51,6 @@ module CAS
 end
 
 Dispatcher.to_prepare do
+  require_dependency 'account_controller'
   AccountController.send(:include, CAS::AccountControllerPatch)
 end

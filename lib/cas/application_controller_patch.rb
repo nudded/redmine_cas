@@ -1,7 +1,6 @@
 require 'casclient'
 require 'casclient/frameworks/rails/filter'
 require 'dispatcher'
-require_dependency 'application_controller'
 
 # Patches Redmine's ApplicationController dinamically. Prepends a CAS gatewaying
 # filter.
@@ -50,5 +49,6 @@ module CAS
 end
 
 Dispatcher.to_prepare do
+  require_dependency 'application_controller'
   ApplicationController.send(:include, CAS::ApplicationControllerPatch)
 end
