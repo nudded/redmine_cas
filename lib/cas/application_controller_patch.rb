@@ -19,7 +19,7 @@ module CAS
 
     module InstanceMethods
       def cas_filter
-        if CAS::CONFIG['enabled'] and !['atom', 'xml', 'json'].include?request.format
+        if CAS::CONFIG['enabled'] and !['atom', 'xml', 'json'].include? request.format
           if params[:controller] != 'account'
             CASClient::Frameworks::Rails::GatewayFilter.filter(self)
           else
@@ -33,9 +33,14 @@ module CAS
       def set_user_id
         if CAS::CONFIG['enabled']
           user = User.find_by_login session[:cas_user]
-          if user and session[:user_id] != user.id
+          if user.nil? # New user
+            @user = User.new(:language => Setting.default_language)
+            @user.login = session[:cas_user]
+            session[:auth_source_registration] = { :login => @user.login }
+            render :template => 'account/register_with_cas'
+          elsif session[:user_id] != user.id
             session[:user_id] = user.id
-            call_hook(:controller_account_success_authentication_after, {:user => user })
+            call_hook(:controller_account_success_authentication_after, { :user => user })
           end
         end
         true
