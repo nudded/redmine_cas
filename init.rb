@@ -7,6 +7,7 @@ end
 require 'redmine'
 require 'cas/account_controller_patch'
 require 'cas/application_controller_patch'
+require 'cas/setting_patch'
 require 'cas/user_patch'
 
 Redmine::Plugin.register :redmine_cas do
