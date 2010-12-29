@@ -15,6 +15,7 @@ module CAS
 
         alias_method_chain :login, :cas
         alias_method_chain :logout, :cas
+        alias_method_chain :register, :cas
       end
     end
 
@@ -37,6 +38,13 @@ module CAS
           CASClient::Frameworks::Rails::Filter::logout(self, home_url)
         else
           logout_without_cas
+        end
+      end
+
+      def register_with_cas
+        register_without_cas
+        if CAS::CONFIG['enabled'] and !performed?
+          render :template => 'account/register_with_cas'
         end
       end
     end
