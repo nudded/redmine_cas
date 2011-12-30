@@ -37,7 +37,8 @@ module CAS
             @user.login = session[:cas_user]
             session[:auth_source_registration] = { :login => @user.login }
             render :template => 'account/register_with_cas'
-          elsif session[:user_id] != user.id
+          elsif session[:user_id] != user.id and !['atom', 'xml', 'json'].include? request.format
+
             session[:user_id] = user.id
             call_hook(:controller_account_success_authentication_after, { :user => user })
           end
