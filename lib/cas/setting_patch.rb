@@ -1,5 +1,3 @@
-require 'dispatcher'
-
 # Patches Redmine's Setting dinamically. Disables self registration link.
 module CAS
   module SettingPatch
@@ -23,7 +21,5 @@ module CAS
   end
 end
 
-Dispatcher.to_prepare do
-  require_dependency 'setting'
-  Setting.send(:include, CAS::SettingPatch)
-end
+require_dependency 'setting'
+Setting.send(:include, CAS::SettingPatch)

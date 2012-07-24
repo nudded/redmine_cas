@@ -1,6 +1,5 @@
 require 'casclient'
 require 'casclient/frameworks/rails/filter'
-require 'dispatcher'
 
 # Patches Redmine's ApplicationController dinamically. Prepends a CAS gatewaying
 # filter.
@@ -35,6 +34,7 @@ module CAS
           if user.nil? # New user
             @user = User.new(:language => Setting.default_language)
             @user.login = session[:cas_user]
+            @user.mail = session[:cas_extra_attributes]["mail"]
             session[:auth_source_registration] = { :login => @user.login }
             render :template => 'account/register_with_cas'
           elsif session[:user_id] != user.id and !['atom', 'xml', 'json'].include? request.format
@@ -49,7 +49,5 @@ module CAS
   end
 end
 
-Dispatcher.to_prepare do
-  require_dependency 'application_controller'
-  ApplicationController.send(:include, CAS::ApplicationControllerPatch)
-end
+require_dependency 'application_controller'
+ApplicationController.send(:include, CAS::ApplicationControllerPatch)

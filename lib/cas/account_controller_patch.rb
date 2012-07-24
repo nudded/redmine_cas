@@ -1,6 +1,5 @@
 require 'casclient'
 require 'casclient/frameworks/rails/filter'
-require 'dispatcher'
 
 # Patches Redmine's AccountController dinamically. Manages login and logout
 # through CAS.
@@ -44,14 +43,12 @@ module CAS
         set_language_if_valid params[:user][:language] rescue nil # Show the activation message in the user's language
         register_without_cas
         if CAS::CONFIG['enabled'] and !performed?
-          render :template => 'account/register_with_cas'
+        #  render :template => 'account/register_with_cas'
         end
       end
     end
   end
 end
 
-Dispatcher.to_prepare do
-  require_dependency 'account_controller'
-  AccountController.send(:include, CAS::AccountControllerPatch)
-end
+require_dependency 'account_controller'
+AccountController.send(:include, CAS::AccountControllerPatch)
