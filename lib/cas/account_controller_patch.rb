@@ -13,7 +13,7 @@ module CAS
 
         alias_method_chain :login, :cas
         alias_method_chain :logout, :cas
-        alias_method_chain :register, :cas
+        #alias_method_chain :register, :cas
       end
     end
 
@@ -49,6 +49,7 @@ module CAS
     end
   end
 end
-
-require_dependency 'account_controller'
-AccountController.send(:include, CAS::AccountControllerPatch)
+Rails.configuration.to_prepare do
+  require_dependency 'account_controller'
+  AccountController.send(:include, CAS::AccountControllerPatch)
+end

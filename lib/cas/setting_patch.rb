@@ -20,6 +20,7 @@ module CAS
     end
   end
 end
-
-require_dependency 'setting'
-Setting.send(:include, CAS::SettingPatch)
+Rails.configuration.to_prepare do
+  require_dependency 'setting'
+  Setting.send(:include, CAS::SettingPatch)
+end

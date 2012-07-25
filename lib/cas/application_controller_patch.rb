@@ -49,5 +49,7 @@ module CAS
   end
 end
 
-require_dependency 'application_controller'
-ApplicationController.send(:include, CAS::ApplicationControllerPatch)
+Rails.configuration.to_prepare do
+  require_dependency 'application_controller'
+  ApplicationController.send(:include, CAS::ApplicationControllerPatch)
+end

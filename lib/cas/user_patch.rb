@@ -18,7 +18,9 @@ module CAS
     end
   end
 end
-
-require_dependency 'principal'
-require_dependency 'user'
-User.send(:include, CAS::UserPatch)
+Rails.configuration.to_prepare do
+  require_dependency 'project'
+  require_dependency 'principal'
+  require_dependency 'user'
+  User.send(:include, CAS::UserPatch)
+end
